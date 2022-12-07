@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 const Register = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+
   const onFinish = async (values) => {
     try {
+      setLoading(true);
       await axios.post("/api/users/register", values);
-
-      message.success("hshshs");
+      setLoading(false);
       navigate("/login");
+      message.success("registration successful");
     } catch (err) {
+      setLoading(false);
       message.error("registration failed");
     }
-
-    // message.success(message);
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("user-expense")) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-x-7 justify-center items-center w-full h-screen bg-green-50 m-auto p-12 ">
+      {loading && <Spinner />}
+      <div className="flex flex-col md:flex-row gap-x-7 justify-center items-center w-full h-screen  m-auto p-12 ">
         {/* IMAGE */}
         <div className=" w-[50%] m-auto ">
           <h1 className=" text-3xl flex justify-start p-2 items-center ">
-            Hello
+            MY MONEY
           </h1>
           <div className=" h-[400px] ">
             <lottie-player

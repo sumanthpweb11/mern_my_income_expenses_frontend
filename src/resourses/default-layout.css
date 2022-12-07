@@ -1,0 +1,18 @@
+.active {
+  color: green;
+}
+
+.inactive {
+  color: gray;
+}
+
+.transaction-count{
+  box-shadow: 0 0 2px gray;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.analytics-h4{
+   font-size: 25px;
+}

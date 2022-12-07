@@ -1,29 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../components/Spinner";
+import { useEffect } from "react";
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const onFinish = async (values) => {
     try {
+      setLoading(true);
       const { data } = await axios.post("api/users/login", values);
       localStorage.setItem(
         "user-expense",
         JSON.stringify({ ...data, password: "" })
       );
+      setLoading(false);
       message.success("Logged in successfully");
       navigate("/");
     } catch (error) {
+      setLoading(false);
       message.error("Login Failed");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("user-expense")) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-x-7 justify-center items-center w-full h-screen bg-green-50 m-auto p-12 ">
+      {loading && <Spinner />}
+      <div className="flex flex-col md:flex-row gap-x-7 justify-center items-center w-full h-screen  m-auto p-12 ">
         {/* IMAGE */}
+
         <div className=" w-[50%] m-auto ">
           <h1 className=" text-3xl flex justify-start p-2 items-center ">
-            Hello
+            MY MONEY
           </h1>
           <div className=" h-[400px] ">
             <lottie-player

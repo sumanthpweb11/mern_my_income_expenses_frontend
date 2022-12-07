@@ -1,6 +1,6 @@
 import "./App.css";
 import "antd/dist/reset.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Test from "./pages/Test";
 import Login from "./pages/Login";
@@ -11,8 +11,22 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/test" element={<Test />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute>
+                <Test />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
@@ -20,5 +34,13 @@ function App() {
     </div>
   );
 }
+
+export const ProtectedRoute = (props) => {
+  if (localStorage.getItem("user-expense")) {
+    return props.children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
 
 export default App;
