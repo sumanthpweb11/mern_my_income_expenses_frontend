@@ -133,13 +133,13 @@ const Analytics = ({ transactionsData }) => {
         <div className="incomecontainer w-1/2">
           <div className="income-category-analysis">
             <h4>Income - Category Wise</h4>
-            {categories.map((category) => {
+            {categories.map((category, index) => {
               const amount = transactionsData
                 .filter((t) => t.type === "income" && t.category === category)
                 .reduce((acc, t) => acc + t.amount, 0);
               return (
                 amount > 0 && (
-                  <div className="category-card">
+                  <div key={index} className="category-card">
                     <h5>{category}</h5>
                     <Progress
                       strokeColor="#0B5AD9"
@@ -155,13 +155,13 @@ const Analytics = ({ transactionsData }) => {
         <div className="expensecontainer w-1/2">
           <div className="expense-category-analysis">
             <h4>Expence - Category Wise</h4>
-            {categories.map((category) => {
+            {categories.map((category, index) => {
               const amount = transactionsData
                 .filter((t) => t.type === "expense" && t.category === category)
                 .reduce((acc, t) => acc + t.amount, 0);
               return (
                 amount > 0 && (
-                  <div className="category-card">
+                  <div key={index} className="category-card">
                     <h5>{category}</h5>
                     <Progress
                       strokeColor="#0B5AD9"

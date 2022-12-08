@@ -10,7 +10,10 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      const { data } = await axios.post("api/users/login", values);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
+        values
+      );
       localStorage.setItem(
         "user-expense",
         JSON.stringify({ ...data, password: "" })

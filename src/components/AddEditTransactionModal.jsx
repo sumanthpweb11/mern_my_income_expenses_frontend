@@ -18,20 +18,26 @@ const AddEditTransactionModal = ({
       const user = JSON.parse(localStorage.getItem("user-expense"));
       setLoading(true);
       if (selectedItemForEdit) {
-        await axios.post("/api/transactions/edit-transaction", {
-          payload: {
-            ...values,
-            userId: user._id,
-          },
-          transactionId: selectedItemForEdit._id,
-        });
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/api/transactions/edit-transaction`,
+          {
+            payload: {
+              ...values,
+              userId: user._id,
+            },
+            transactionId: selectedItemForEdit._id,
+          }
+        );
         getTransactions();
         message.success("Transaction Edited Successfully");
       } else {
-        await axios.post("/api/transactions/add-transaction", {
-          ...values,
-          userId: user._id,
-        });
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/api/transactions/add-transaction`,
+          {
+            ...values,
+            userId: user._id,
+          }
+        );
         getTransactions();
         message.success("Transaction Added Successfully");
       }

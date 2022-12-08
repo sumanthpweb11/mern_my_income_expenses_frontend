@@ -32,7 +32,7 @@ const Home = () => {
       const user = JSON.parse(localStorage.getItem("user-expense"));
       setLoading(true);
       const resposne = await axios.post(
-        "api/transactions/get-all-transactions",
+        `${process.env.REACT_APP_SERVER_URL}/api/transactions/get-all-transactions`,
         {
           userId: user._id,
           frequency,
@@ -53,9 +53,12 @@ const Home = () => {
   const deleteTransaction = async (record) => {
     try {
       setLoading(true);
-      await axios.post("api/transactions/delete-transaction", {
-        transactionId: record._id,
-      });
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/transactions/delete-transaction`,
+        {
+          transactionId: record._id,
+        }
+      );
       message.success("Record Deleted ");
       getTransactions();
       setLoading(false);
